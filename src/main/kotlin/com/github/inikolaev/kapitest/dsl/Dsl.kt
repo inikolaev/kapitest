@@ -10,13 +10,15 @@ import com.github.inikolaev.kapitest.yellow
 @DslMarker
 annotation class KApiTestDslMarker
 
-@KApiTestDslMarker
-object KApiTest {
-    fun scenario(name: String, block: Scenario.() -> Unit): Scenario {
-        val matchingResults = mutableListOf<MatchingResult>()
-        val scenario = Scenario(name, matchingResults)
-        scenario.block()
+abstract class Reporter(
+    protected val name: String,
+    protected val matchingResults: List<MatchingResult>
+) {
+    abstract fun report()
+}
 
+class ConsoleReporter(name: String, matchingResults: List<MatchingResult>): Reporter(name, matchingResults) {
+    override fun report() {
         val matching = matchingResults.all(MatchingResult::match)
 
         if (matching) {
@@ -34,6 +36,18 @@ object KApiTest {
         }
 
         println()
+    }
+}
+
+@KApiTestDslMarker
+object KApiTest {
+    fun scenario(name: String, block: Scenario.() -> Unit): Scenario {
+        val matchingResults = mutableListOf<MatchingResult>()
+        val scenario = Scenario(name, matchingResults)
+        scenario.block()
+
+        ConsoleReporter(name, matchingResults.toList()).report()
+
         return scenario
     }
 }
