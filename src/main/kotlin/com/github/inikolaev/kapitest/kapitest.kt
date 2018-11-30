@@ -20,6 +20,7 @@ fun main(args: Array<String>) {
         } then {
             status isEqual 300
             headers["content-type"] isEqual "application/json"
+            body isEqual "some response body"
         }
     }
 }

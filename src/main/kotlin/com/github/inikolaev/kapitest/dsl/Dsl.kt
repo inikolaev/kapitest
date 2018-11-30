@@ -4,6 +4,7 @@ import com.github.inikolaev.kapitest.green
 import com.github.inikolaev.kapitest.matchers.HeadersMatcher
 import com.github.inikolaev.kapitest.matchers.MatchingResult
 import com.github.inikolaev.kapitest.matchers.StatusMatcher
+import com.github.inikolaev.kapitest.matchers.StringMatcher
 import com.github.inikolaev.kapitest.red
 import com.github.inikolaev.kapitest.yellow
 
@@ -77,7 +78,8 @@ class Request {
 @KApiTestDslMarker
 class Response(
     val status: StatusMatcher,
-    val headers: HeadersMatcher
+    val headers: HeadersMatcher,
+    val body: StringMatcher
 )
 
 class Promise(val request: Request, val matchingResults: MutableList<MatchingResult>) {
@@ -89,5 +91,6 @@ class Promise(val request: Request, val matchingResults: MutableList<MatchingRes
     fun execute(request: Request): Response =
         Response(
             StatusMatcher(matchingResults, 200),
-            HeadersMatcher(matchingResults, mapOf("content-type" to "application/json")))
+            HeadersMatcher(matchingResults, mapOf("content-type" to "application/json")),
+            StringMatcher(matchingResults, "body", "some response body"))
 }
