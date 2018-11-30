@@ -18,7 +18,7 @@ fun main(args: Array<String>) {
             host = "localhost"
             port = 443
         }.then {
-            status isEqual 200
+            status isEqual 300
             headers["content-type"] isEqual "application/json"
         }
     }
