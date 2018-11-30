@@ -6,7 +6,7 @@ fun main(args: Array<String>) {
             schema = "https"
             host = "localhost"
             port = 443
-        }.then {
+        } then {
             status isEqual 200
             headers["content-type"] isEqual "application/json"
         }
@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
             schema = "https"
             host = "localhost"
             port = 443
-        }.then {
+        } then {
             status isEqual 300
             headers["content-type"] isEqual "application/json"
         }

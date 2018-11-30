@@ -67,7 +67,7 @@ class Response(
 )
 
 class Promise(val request: Request, val matchingResults: MutableList<MatchingResult>) {
-    fun then(block: Response.() -> Unit) {
+    infix fun then(block: Response.() -> Unit) {
         val response: Response = execute(request)
         response.block()
     }
