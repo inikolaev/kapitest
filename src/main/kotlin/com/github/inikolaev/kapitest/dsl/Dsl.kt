@@ -72,6 +72,7 @@ class Request {
     var schema: String = "http"
     var host: String = "localhost"
     var port: Int = 80
+    var path: String = "/"
     var params = mutableMapOf<String, String>()
     var headers = mutableMapOf<String, String>()
     var body: String? = null
@@ -96,6 +97,7 @@ class Promise(val request: Request, val matchingResults: MutableList<MatchingRes
             request.schema,
             request.host,
             request.port,
+            request.path,
             request.params,
             request.headers,
             request.body?.toByteArray()

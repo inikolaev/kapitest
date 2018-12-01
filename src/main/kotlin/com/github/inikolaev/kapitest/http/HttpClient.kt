@@ -1,5 +1,7 @@
 package com.github.inikolaev.kapitest.http
 
+import com.mashape.unirest.http.Unirest
+
 data class HttpResponse(
     val status: Int,
     val headers: Map<String, String>,
@@ -32,14 +34,36 @@ object HttpClient {
         schema: String,
         host: String,
         port: Int,
+        path: String,
         params: Map<String, String> = mapOf(),
         headers: Map<String, String> = mapOf(),
         body: ByteArray? = null
     ): HttpResponse {
+        val response = when (method.toLowerCase()) {
+            "get" -> {
+                Unirest.get("$schema://$host:$port$path")
+                    .queryString(params)
+                    .headers(headers)
+                    .asBinary()
+            }
+
+            "post" -> {
+                Unirest.post("$schema://$host:$port$path")
+                    .queryString(params)
+                    .headers(headers)
+                    .body(body)
+                    .asBinary()
+            }
+
+            else -> throw IllegalArgumentException("Unrecognized HTTP method: $method")
+        }
+
         return HttpResponse(
-            status = 200,
-            headers = mapOf("content-type" to "application/json"),
-            body = "simple string body".toByteArray()
+            status = response.status,
+            headers = response.headers.map { (name, values) ->
+                Pair(name.toLowerCase(), values.first())
+            }.toMap(),
+            body = response.body.readBytes()
         )
     }
 }

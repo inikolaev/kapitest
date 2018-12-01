@@ -36,6 +36,6 @@ class HeadersMatcher(
     private val headers: Map<String, String>
 ): Matcher(matchingResults, "headers", headers) {
     operator fun get(header: String): StringMatcher {
-        return StringMatcher(matchingResults, header, headers[header], " header")
+        return StringMatcher(matchingResults, header, headers[header.toLowerCase()], " header")
     }
 }

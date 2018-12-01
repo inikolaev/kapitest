@@ -4,8 +4,9 @@ fun main(args: Array<String>) {
     KApiTest.scenario("Test scenario 1") {
         given {
             schema = "https"
-            host = "localhost"
+            host = "httpbin.org"
             port = 443
+            path = "/get"
         } then {
             status isEqual 200
             headers["content-type"] isEqual "application/json"
@@ -15,8 +16,9 @@ fun main(args: Array<String>) {
     KApiTest.scenario("Test scenario 2") {
         given {
             schema = "https"
-            host = "localhost"
+            host = "httpbin.org"
             port = 443
+            path = "/get"
         } then {
             status isEqual 300
             headers["content-type"] isEqual "application/json"
