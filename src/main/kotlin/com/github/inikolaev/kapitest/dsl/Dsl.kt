@@ -1,6 +1,7 @@
 package com.github.inikolaev.kapitest.dsl
 
 import com.github.inikolaev.kapitest.green
+import com.github.inikolaev.kapitest.http.HttpClient
 import com.github.inikolaev.kapitest.matchers.HeadersMatcher
 import com.github.inikolaev.kapitest.matchers.MatchingResult
 import com.github.inikolaev.kapitest.matchers.StatusMatcher
@@ -67,12 +68,13 @@ class Scenario(
 
 @KApiTestDslMarker
 class Request {
+    var method: String = "get"
     var schema: String = "http"
     var host: String = "localhost"
     var port: Int = 80
     var params = mutableMapOf<String, String>()
     var headers = mutableMapOf<String, String>()
-    var body: Any? = null
+    var body: String? = null
 }
 
 @KApiTestDslMarker
@@ -88,9 +90,19 @@ class Promise(val request: Request, val matchingResults: MutableList<MatchingRes
         response.block()
     }
 
-    fun execute(request: Request): Response =
-        Response(
-            StatusMatcher(matchingResults, 200),
-            HeadersMatcher(matchingResults, mapOf("content-type" to "application/json")),
-            StringMatcher(matchingResults, "body", "some response body"))
+    fun execute(request: Request): Response {
+        val httpResponse = HttpClient.request(
+            request.method,
+            request.schema,
+            request.host,
+            request.port,
+            request.params,
+            request.headers,
+            request.body?.toByteArray()
+        )
+        return Response(
+            StatusMatcher(matchingResults, httpResponse.status),
+            HeadersMatcher(matchingResults, httpResponse.headers),
+            StringMatcher(matchingResults, "body", httpResponse.body.toString()))
+    }
 }
