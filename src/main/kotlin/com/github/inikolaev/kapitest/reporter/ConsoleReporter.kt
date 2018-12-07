@@ -1,10 +1,6 @@
 package com.github.inikolaev.kapitest.reporter
 
-import com.github.inikolaev.kapitest.cyan
-import com.github.inikolaev.kapitest.green
 import com.github.inikolaev.kapitest.matchers.MatchingResult
-import com.github.inikolaev.kapitest.red
-import com.github.inikolaev.kapitest.yellow
 
 class ConsoleReporter(name: String, matchingResults: List<MatchingResult>): Reporter(name, matchingResults) {
     companion object {

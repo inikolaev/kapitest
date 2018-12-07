@@ -1,4 +1,4 @@
-package com.github.inikolaev.kapitest
+package com.github.inikolaev.kapitest.reporter
 
 fun color(color: Int, text: Any?) =
     "\u001B[${color}m$text\u001B[0m"
