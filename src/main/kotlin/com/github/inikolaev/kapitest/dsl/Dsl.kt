@@ -1,52 +1,14 @@
 package com.github.inikolaev.kapitest.dsl
 
-import com.github.inikolaev.kapitest.cyan
-import com.github.inikolaev.kapitest.green
 import com.github.inikolaev.kapitest.http.HttpClient
 import com.github.inikolaev.kapitest.matchers.HeadersMatcher
 import com.github.inikolaev.kapitest.matchers.MatchingResult
 import com.github.inikolaev.kapitest.matchers.StatusMatcher
 import com.github.inikolaev.kapitest.matchers.StringMatcher
-import com.github.inikolaev.kapitest.red
-import com.github.inikolaev.kapitest.yellow
+import com.github.inikolaev.kapitest.reporter.ConsoleReporter
 
 @DslMarker
 annotation class KApiTestDslMarker
-
-abstract class Reporter(
-    protected val name: String,
-    protected val matchingResults: List<MatchingResult>
-) {
-    abstract fun report()
-}
-
-class ConsoleReporter(name: String, matchingResults: List<MatchingResult>): Reporter(name, matchingResults) {
-    override fun report() {
-        val matching = matchingResults.all(MatchingResult::match)
-
-        if (matching) {
-            println("${green("\u2714")} ${yellow(name)}")
-        } else {
-            println("${red("\u2718")} ${yellow(name)}")
-        }
-
-        matchingResults.forEach {
-            if (it.match) {
-                println("\t${green("\u2714")} ${reportMatcher(it)}")
-            } else {
-                println("\t${red("\u2718")} ${reportMatcher(it)}")
-            }
-        }
-
-        println()
-    }
-
-    private fun reportMatcher(matchingResult: MatchingResult) =
-        if (matchingResult.nameSuffix.isNotBlank())
-            "${cyan(matchingResult.name)} ${matchingResult.nameSuffix} ${matchingResult.message} ${cyan(matchingResult.value)}"
-        else
-            "${cyan(matchingResult.name)} ${matchingResult.message} ${cyan(matchingResult.value)}"
-}
 
 @KApiTestDslMarker
 object KApiTest {
