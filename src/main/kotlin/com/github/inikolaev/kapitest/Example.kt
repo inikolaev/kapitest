@@ -1,7 +1,7 @@
-import com.github.inikolaev.kapitest.dsl.KApiTest
+import com.github.inikolaev.kapitest.dsl.KApiTest.scenario
 
 fun main(args: Array<String>) {
-    KApiTest.scenario("Match integer status") {
+    scenario("Match integer status") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -12,7 +12,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Do not match integer status") {
+    scenario("Do not match integer status") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Match string status") {
+    scenario("Match string status") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -34,7 +34,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Do not match invalid string status") {
+    scenario("Do not match invalid string status") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -45,7 +45,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Status is greater than 100") {
+    scenario("Status is greater than 100") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -56,7 +56,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Status is greater or equals 200") {
+    scenario("Status is greater or equals 200") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -67,7 +67,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Status is lower than 300") {
+    scenario("Status is lower than 300") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -78,7 +78,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Status is lower or equals 200") {
+    scenario("Status is lower or equals 200") {
         given {
             schema = "https"
             host = "httpbin.org"
@@ -89,7 +89,7 @@ fun main(args: Array<String>) {
         }
     }
 
-    KApiTest.scenario("Status is 2xx") {
+    scenario("Status is 2xx") {
         given {
             schema = "https"
             host = "httpbin.org"

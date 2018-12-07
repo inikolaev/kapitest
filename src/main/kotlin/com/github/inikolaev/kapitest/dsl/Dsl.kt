@@ -42,8 +42,8 @@ class Request {
     var host: String = "localhost"
     var port: Int = 80
     var path: String = "/"
-    var params = mutableMapOf<String, String>()
-    var headers = mutableMapOf<String, String>()
+    var params = mapOf<String, String>()
+    var headers = mapOf<String, String>()
     var body: String? = null
 }
 
@@ -60,7 +60,7 @@ class Promise(val request: Request, val matchingResults: MutableList<MatchingRes
         response.block()
     }
 
-    fun execute(request: Request): Response {
+    private fun execute(request: Request): Response {
         val httpResponse = HttpClient.request(
             request.method,
             request.schema,
