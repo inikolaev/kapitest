@@ -1,5 +1,6 @@
 package com.github.inikolaev.kapitest.dsl
 
+import com.github.inikolaev.kapitest.cyan
 import com.github.inikolaev.kapitest.green
 import com.github.inikolaev.kapitest.http.HttpClient
 import com.github.inikolaev.kapitest.matchers.HeadersMatcher
@@ -31,14 +32,20 @@ class ConsoleReporter(name: String, matchingResults: List<MatchingResult>): Repo
 
         matchingResults.forEach {
             if (it.match) {
-                println("\t${green("\u2714")} ${it.message}")
+                println("\t${green("\u2714")} ${reportMatcher(it)}")
             } else {
-                println("\t${red("\u2718")} ${it.message}")
+                println("\t${red("\u2718")} ${reportMatcher(it)}")
             }
         }
 
         println()
     }
+
+    private fun reportMatcher(matchingResult: MatchingResult) =
+        if (matchingResult.nameSuffix.isNotBlank())
+            "${cyan(matchingResult.name)} ${matchingResult.nameSuffix} ${matchingResult.message} ${cyan(matchingResult.value)}"
+        else
+            "${cyan(matchingResult.name)} ${matchingResult.message} ${cyan(matchingResult.value)}"
 }
 
 @KApiTestDslMarker

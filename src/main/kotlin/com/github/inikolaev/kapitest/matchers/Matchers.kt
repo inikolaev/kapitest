@@ -1,8 +1,12 @@
 package com.github.inikolaev.kapitest.matchers
 
-import com.github.inikolaev.kapitest.cyan
-
-data class MatchingResult(val match: Boolean, val message: String)
+data class MatchingResult(
+    val match: Boolean,
+    val name: String,
+    val nameSuffix: String,
+    val message: String,
+    val value: Any?
+)
 
 open class Matcher(
     private val matchingResults: MutableList<MatchingResult>,
@@ -11,11 +15,12 @@ open class Matcher(
     private val nameSuffix: String = ""
 ) {
     infix fun isEqual(value: Any?) =
-        // TODO: we should somehow remove coloring from here,
-        //       reporter should be responsible for proper coloring
         matchingResults.add(MatchingResult(
             this.value == value,
-            "${cyan(name)}$nameSuffix is equal to ${cyan(value)}"
+            name,
+            nameSuffix,
+            "is equal to",
+            value
         ))
 }
 
@@ -36,6 +41,6 @@ class HeadersMatcher(
     private val headers: Map<String, String>
 ): Matcher(matchingResults, "headers", headers) {
     operator fun get(header: String): StringMatcher {
-        return StringMatcher(matchingResults, header, headers[header.toLowerCase()], " header")
+        return StringMatcher(matchingResults, header, headers[header.toLowerCase()], "header")
     }
 }
