@@ -1,6 +1,6 @@
-package com.github.inikolaev.kapitest.reporter
+package com.github.inikolaev.kungfu.reporter
 
-import com.github.inikolaev.kapitest.matchers.MatchingResult
+import com.github.inikolaev.kungfu.matchers.MatchingResult
 
 class ConsoleReporter(name: String, matchingResults: List<MatchingResult>): Reporter(name, matchingResults) {
     companion object {

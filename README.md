@@ -1,4 +1,4 @@
-# Kotlin API Test
+# Kung Fu
 
 Library for API test automation which provides a convenient and easy to use Kotlin DSL.
 

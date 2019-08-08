@@ -1,4 +1,4 @@
-package com.github.inikolaev.kapitest.http
+package com.github.inikolaev.kungfu.http
 
 import com.mashape.unirest.http.Unirest
 

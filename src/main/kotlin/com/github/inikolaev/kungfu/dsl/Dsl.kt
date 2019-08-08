@@ -1,17 +1,19 @@
-package com.github.inikolaev.kapitest.dsl
+package com.github.inikolaev.kungfu.dsl
 
-import com.github.inikolaev.kapitest.http.HttpClient
-import com.github.inikolaev.kapitest.matchers.HeadersMatcher
-import com.github.inikolaev.kapitest.matchers.MatchingResult
-import com.github.inikolaev.kapitest.matchers.StatusMatcher
-import com.github.inikolaev.kapitest.matchers.StringMatcher
-import com.github.inikolaev.kapitest.reporter.ConsoleReporter
+import com.github.inikolaev.kungfu.http.HttpClient
+import com.github.inikolaev.kungfu.matchers.HeadersMatcher
+import com.github.inikolaev.kungfu.matchers.MatchingResult
+import com.github.inikolaev.kungfu.matchers.StatusMatcher
+import com.github.inikolaev.kungfu.matchers.StringMatcher
+import com.github.inikolaev.kungfu.reporter.ConsoleReporter
 
 @DslMarker
-annotation class KApiTestDslMarker
+annotation class KungfuDslMarker
 
-@KApiTestDslMarker
-object KApiTest {
+abstract class Kungfu(val root: Root.() -> Unit)
+
+@KungfuDslMarker
+object Root {
     fun scenario(name: String, block: Scenario.() -> Unit): Scenario {
         val matchingResults = mutableListOf<MatchingResult>()
         val scenario = Scenario(name, matchingResults)
@@ -23,7 +25,7 @@ object KApiTest {
     }
 }
 
-@KApiTestDslMarker
+@KungfuDslMarker
 class Scenario(
     val name: String,
     private val matchingResults: MutableList<MatchingResult>
@@ -35,7 +37,7 @@ class Scenario(
     }
 }
 
-@KApiTestDslMarker
+@KungfuDslMarker
 class Request {
     var method: String = "get"
     var schema: String = "http"
@@ -47,7 +49,7 @@ class Request {
     var body: String? = null
 }
 
-@KApiTestDslMarker
+@KungfuDslMarker
 class Response(
     val status: StatusMatcher,
     val headers: HeadersMatcher,

@@ -1,4 +1,4 @@
-import com.github.inikolaev.kapitest.dsl.KApiTest.scenario
+import com.github.inikolaev.kungfu.dsl.Root.scenario
 
 fun main(args: Array<String>) {
     scenario("Match integer status") {

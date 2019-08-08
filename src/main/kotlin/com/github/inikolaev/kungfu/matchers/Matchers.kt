@@ -1,4 +1,4 @@
-package com.github.inikolaev.kapitest.matchers
+package com.github.inikolaev.kungfu.matchers
 
 data class MatchingResult(
     val match: Boolean,
