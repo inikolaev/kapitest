@@ -16,6 +16,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.junit.platform:junit-platform-launcher:1.3.2")
+
     // Use the Kotlin JDK 8 standard library
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("com.mashape.unirest:unirest-java:1.4.9")
@@ -25,4 +27,12 @@ dependencies {
 
     // Use the Kotlin JUnit integration
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.0")
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+    //testLogging.showStandardStreams = true
 }
